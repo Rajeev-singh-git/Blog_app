@@ -3,6 +3,8 @@ package com.codewithrajeev.blog.services.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
+//import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,13 +13,17 @@ import com.codewithrajeev.blog.exceptions.ResourceNotFoundException;
 import com.codewithrajeev.blog.payloads.UserDto;
 import com.codewithrajeev.blog.repositories.UserRepo;
 import com.codewithrajeev.blog.services.UserService;
-
+import com.codewithrajeev.blog.BlogAppApisApplication;
 
 @Service
 public class UserServiceImpl implements UserService {
-	
+
 	@Autowired
 	private UserRepo userRepo;
+	
+	@Autowired
+    private ModelMapper modelMapper;
+
 	
 	
 
@@ -66,24 +72,17 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	public User dtoToUser(UserDto userDto) {
-		User user = new User();
-		user.setId(userDto.getId());
-		user.setName(userDto.getName());
-		user.setEmail(userDto.getEmail());
-		user.setAbout(userDto.getAbout());
-		user.setPassword(userDto.getPassword());
+		User user = this.modelMapper.map(userDto, User.class);
+//		user.setId(userDto.getId());
+//		user.setName(userDto.getName());
+//		user.setEmail(userDto.getEmail());
+//		user.setAbout(userDto.getAbout());
+//		user.setPassword(userDto.getPassword());
 		return user;
 	}
 	
 	private UserDto userToDto(User user) {
-		
-		UserDto userDto = new UserDto();
-		userDto.setId(user.getId());
-		userDto.setName(user.getName());
-		userDto.setEmail(user.getEmail());
-		userDto.setAbout(user.getAbout());
-		userDto.setPassword(user.getPassword());
-		
+		UserDto userDto = this.modelMapper.map(user, UserDto.class);
 		return userDto;
 	}
 
