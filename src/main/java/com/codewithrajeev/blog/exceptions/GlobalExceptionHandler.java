@@ -1,5 +1,6 @@
 package com.codewithrajeev.blog.exceptions;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,7 +19,7 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(ResourceNotFoundException.class)
 	public ResponseEntity<ApiResponse> resourecNotFopundExceptionHandler(ResourceNotFoundException ex){
 		String message = ex.getMessage();
-		ApiResponse apiResponse = new ApiResponse(message, "false");
+		ApiResponse apiResponse = new ApiResponse(message,false);
 		return new ResponseEntity<ApiResponse>(apiResponse, HttpStatus.NOT_FOUND);
 		
 	}
@@ -30,6 +31,7 @@ public class GlobalExceptionHandler {
 			 String fieldName = ((FieldError)error).getField();
 			 String message = error.getDefaultMessage();
 			 resp.put(fieldName, message);
+			 resp.put("timestamp", LocalDateTime.now().toString());
 		});
 		
 		return new ResponseEntity<Map<String,String>>(resp, HttpStatus.BAD_REQUEST);

@@ -13,8 +13,6 @@ import lombok.AllArgsConstructor;
 public class ApiResponse {
 	
 	private String message;
-	private String status;
-
-	 
-	 
+	private boolean status;
+ 
 }

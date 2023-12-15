@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import com.codewithrajeev.blog.entities.User;
 import com.codewithrajeev.blog.exceptions.ResourceNotFoundException;
 import com.codewithrajeev.blog.payloads.UserDto;
@@ -33,6 +34,8 @@ public class UserServiceImpl implements UserService {
 		User savedUser = this.userRepo.save(user);
 		return this.userToDto(savedUser);
 	}
+	
+
 
 	@Override
 	public UserDto updateUser(UserDto userDto, Integer userId) {
