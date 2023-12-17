@@ -1,5 +1,7 @@
 package com.codewithrajeev.blog.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +28,19 @@ public class PostController {
 		PostDto createPost = this.postService.createPost(postDto, userId, categoryId);
 		return new ResponseEntity<PostDto>(createPost,HttpStatus.CREATED);
 		
+	}
+	
+	@PostMapping("/user/{userId}/posts")
+	public ResponseEntity<List<PostDto>> getPostByUser(@PathVariable Integer userId){
+		List<PostDto> postDtos = this.postService.getPostByUser(userId);
+		return new ResponseEntity<List<PostDto>>(postDtos,HttpStatus.OK);
+	}
+	
+
+	@PostMapping("/category/{categoryId}/posts")
+	public ResponseEntity<List<PostDto>> getPostByCategory(@PathVariable Integer categoryId){
+		List<PostDto> postDtos = this.postService.getPostByCategory(categoryId);
+		return new ResponseEntity<List<PostDto>>(postDtos,HttpStatus.OK);
 	}
 
 }
