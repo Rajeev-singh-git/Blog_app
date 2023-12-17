@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.codewithrajeev.blog.payloads.ApiResponse;
 import com.codewithrajeev.blog.payloads.PostDto;
+import com.codewithrajeev.blog.payloads.PostResponse;
 import com.codewithrajeev.blog.services.PostService;
 
 @RestController
@@ -49,12 +50,12 @@ public class PostController {
 	
 	
 	@GetMapping("/posts")
-	public ResponseEntity <List<PostDto>> getAllPost(
+	public ResponseEntity <PostResponse> getAllPost(
 			@RequestParam(value="pageNumber",defaultValue="0",required= false) Integer pageNumber,
 			@RequestParam(value="pageSize",defaultValue="5",required=false) Integer pageSize
 			){
-		List<PostDto> allPostDtos = this.postService.getAllPost(pageNumber,pageSize);
-		return new ResponseEntity<List<PostDto>>(allPostDtos,HttpStatus.OK);
+		PostResponse postResponse = this.postService.getAllPost(pageNumber,pageSize);
+		return new ResponseEntity<PostResponse>(postResponse,HttpStatus.OK);
 	}
 	
 	@GetMapping("/posts/{postId}")
