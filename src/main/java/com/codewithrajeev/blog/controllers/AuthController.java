@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,7 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.codewithrajeev.blog.exceptions.ApiException;
 import com.codewithrajeev.blog.payloads.JwtAuthRequest;
 import com.codewithrajeev.blog.payloads.JwtAuthResponse;
+import com.codewithrajeev.blog.payloads.UserDto;
 import com.codewithrajeev.blog.security.JwtTokenHelper;
+import com.codewithrajeev.blog.services.UserService;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -26,12 +27,14 @@ public class AuthController {
 	@Autowired
 	private JwtTokenHelper jwtTokenHelper;
 	
-	
 	@Autowired
 	private  UserDetailsService userDetailsService; 
 	
 	@Autowired
 	private AuthenticationManager authenticationManager;
+	
+	@Autowired
+	private UserService userService;
 	
 	
   	@PostMapping("/login/")
@@ -60,6 +63,13 @@ public class AuthController {
 			throw new ApiException("Invalid username or password");
 		}
 		
+	}
+	
+	@PostMapping("/register")
+	public ResponseEntity<UserDto> registerUser(@RequestBody UserDto userDto){
+		UserDto registerdUser = this.userService.registerNewUser(userDto);
+		
+		return new ResponseEntity<UserDto>(registerdUser, HttpStatus.CREATED);	
 	}
 
 }
