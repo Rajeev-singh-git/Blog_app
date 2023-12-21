@@ -20,7 +20,7 @@ import com.codewithrajeev.blog.payloads.JwtAuthResponse;
 import com.codewithrajeev.blog.security.JwtTokenHelper;
 
 @RestController
-@RequestMapping("/api/v1/auth")
+@RequestMapping("/api/auth")
 public class AuthController {
 	
 	@Autowired
@@ -34,7 +34,7 @@ public class AuthController {
 	private AuthenticationManager authenticationManager;
 	
 	
-  	@PostMapping("/login")
+  	@PostMapping("/login/")
 	 public ResponseEntity<JwtAuthResponse> createToken(
 			@RequestBody JwtAuthRequest request) throws Exception{
 		
