@@ -15,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.codewithrajeev.blog.security.CustomUserDetailService;
 import com.codewithrajeev.blog.security.JwtAuthenticationEntryPoint;
@@ -24,6 +25,7 @@ import com.codewithrajeev.blog.security.JwtAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
+@EnableWebMvc
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig{
 	
@@ -41,9 +43,9 @@ public class SecurityConfig{
 
         http
                 .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests((authorize) -> authorize
-                                .requestMatchers(HttpMethod.GET).permitAll()
+                .authorizeHttpRequests((authorize) -> authorize                            
                                 .requestMatchers("/api/auth/**").permitAll()
+                                .requestMatchers(HttpMethod.GET).permitAll()
                                 .anyRequest().authenticated()
                 )
                 .exceptionHandling((exceptions) -> exceptions
